@@ -41,7 +41,8 @@ class _LoginViewState extends State<LoginView> {
             autocorrect: true,
             enableSuggestions: true,
             keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(hintText: 'Ener your email here'),
+            decoration:
+                const InputDecoration(hintText: 'Enter your email here'),
           ),
           TextField(
             controller: _password,
@@ -60,10 +61,18 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  notesRoute,
-                  (route) => false,
-                );
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false) {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    notesRoute,
+                    (route) => false,
+                  );
+                } else {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    verifyEmailRoute,
+                    (route) => false,
+                  );
+                }
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'invalid-credential') {
                   await showErrorDialog(
