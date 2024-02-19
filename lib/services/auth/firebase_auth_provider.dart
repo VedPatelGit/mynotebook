@@ -1,3 +1,6 @@
+//This fule is the concrete implmentation of
+// the interfac (auth_provider.dart).
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mynotebook/firebase_options.dart';
 import 'package:mynotebook/services/auth/auth_user.dart';
